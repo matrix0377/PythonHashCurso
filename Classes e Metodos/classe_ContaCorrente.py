@@ -52,7 +52,7 @@ class ContaCorrente():
 
     def consultar_historico_transacoes(self):
         print('Histórico de Transações:')
-        print('==' * 19)
+        print('==' * 28)
         print('Tipo_Transação, Valor, Saldo, Data e Hora')
         for transacao in self.transacoes:
             print(transacao)
@@ -99,14 +99,14 @@ print(' --- >>> Mostrando saldo Final: ')
 conta_davi.consultar__saldo()
 conta_davi.consultar_limite_chequeespecial()
 
-print('==' * 25)
+print('==' * 28)
 # print(conta_davi.transacoes)
 conta_davi.consultar_historico_transacoes()
-print('==' * 25)
+print('==' * 28)
 print('\n')
 
 
-print('consultar Historico maeDavi')
+print('consultar Historico maeDavi\n')
 conta_maeDavi.consultar_historico_transacoes()
-print('==' * 25)
+print('==' * 28)
 print('\n')
