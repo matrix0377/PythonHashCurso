@@ -103,9 +103,20 @@ class CartaoCredito:
         self.validade = '{}/{}'.format(CartaoCredito._data_hora().month, CartaoCredito._data_hora().year + 4)
         self.cod_seguranca = '{}{}{}'.format(randint(0, 9), randint(0, 9), randint(0, 9))
         self.limite = 1000
+        self._senha = '1234'
         self.conta_corrente = conta_corrente
         conta_corrente.cartoes.append(self)
 
+    @property
+    def senha(self):
+        return self._senha
+    
+    @senha.setter
+    def senha(self, valor):
+        if len(valor) ==4 and valor.isnumeric():
+            self._senha = valor
+        else:
+            print("Nova senha inválida!")
 
 
 # programa
@@ -185,3 +196,17 @@ print('Validade: {}  PIN: {}'.format(
     cartao_drica.validade, cartao_drica.cod_seguranca))
 print('Limite do cartão: R$ {:,.2f}'.format(cartao_drica.limite))
 print('==' * 25)
+
+# getter e setter
+print('=======----------->>> Getter e Setter')
+print('==' * 25)
+cartao_davi.senha = '12'
+print(cartao_davi.senha)
+
+conta_davi.nome = "Davi Augusto"
+print(conta_davi.nome)
+print('Nova Senha:')
+cartao_davi.senha = '2345'
+print(cartao_davi.senha)
+print('---------------')
+
