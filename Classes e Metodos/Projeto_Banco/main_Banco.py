@@ -1,4 +1,4 @@
-from classe_ContasBanco import ContaCorrente, CartaoCredito, Conta
+from ContasBanco import ContaCorrente, CartaoCredito
 
 # programa
 conta_davi = ContaCorrente("Davi", "111.222.333-45", "3025", "505257")
