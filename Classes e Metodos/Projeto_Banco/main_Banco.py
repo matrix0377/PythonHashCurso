@@ -1,4 +1,6 @@
 from ContasBanco import ContaCorrente, CartaoCredito
+from Agencia import AgenciaPremium, AgenciaComum, AgenciaVirtual
+
 
 # programa
 conta_davi = ContaCorrente("Davi", "111.222.333-45", "3025", "505257")
@@ -7,7 +9,7 @@ conta_davi.consultar__saldo()
 conta_nilva = ContaCorrente("Nilva", "222.333.444-55", "5555", "656565")
 conta_drica = ContaCorrente("Adriana", "555.666.777-89", "5030", "757575")
 
-#depositar um dinheirinho na conta:
+# depositar um dinheirinho na conta:
 deposito = 25000
 print('\n --- >>> Depositando R$ {:,.2f}\n'.format(deposito))
 conta_davi.depositar_dinheiro(deposito)
@@ -95,3 +97,8 @@ print('---------------\n')
 print('--------- Todos Atributos ---------------')
 print(conta_davi.__dict__)
 print(cartao_davi.__dict__)
+
+print('--------- Agencia Premium Especial ---------------')
+agencia_premium_especial = AgenciaPremium(22221111, 15888888888)
+print(agencia_premium_especial.telefone)
+print(agencia_premium_especial.caixa)
