@@ -26,7 +26,7 @@ connect(dsn='myhost:MYDB', user='guido', password='234$', database='ContosoRetai
 import pyodbc
 
 
-dados_conexao = ("Driver={SQL Server Native Client 11.0};"
+dados_conexao = ("Driver={SQL Server};"
                  "Server=W11V1-SQLSERVER;"
                  "Database=ContosoRetailDW;"
                  "UID=markv;"
