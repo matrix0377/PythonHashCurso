@@ -17,12 +17,12 @@ print("Conexão Bem Sucedida")
 cursor = conexao.cursor()
 
 
-id = 4
-cliente = "Tania Ferraz"
-produto = "Ipad"
+id = 100
+cliente = "Katia Fernandes"
+produto = "Ipad8"
 data = "10/04/2022"
-preco = 7000
-quantidade = 1
+preco = 4000
+quantidade = 2
 
 comando = f"""INSERT INTO Vendas(id_venda, cliente, produto, data_venda, preco, quantidade)
 VALUES

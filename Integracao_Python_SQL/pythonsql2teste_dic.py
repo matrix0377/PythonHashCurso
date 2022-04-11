@@ -51,9 +51,11 @@ class Compra:
         self.preco = preco
         self.qtde = qtde
         self.historico = []
+        self.incluir = []
 
-    def gravar_sql_Server():
+    def gravar_sql_Server(self, id, cliente, produto, data, preco, qtde):
 
+        import pyodbc
         # gravando no SQL_Server - Local
         dados_conexao = (
             "Driver={SQL Server};"
@@ -64,7 +66,7 @@ class Compra:
         conexao = pyodbc.connect(dados_conexao)
         print("Conexão Bem Sucedida")
 
-        # cursor = conexao.cursor()
+        cursor = conexao.cursor()
 
         # id = 4
         # cliente = "Tania Ferraz"
@@ -75,7 +77,7 @@ class Compra:
 
         comando = f"""INSERT INTO Vendas(id_venda, cliente, produto, data_venda, preco, quantidade)
         VALUES
-            ({id}, '{cliente}', '{produto}', '{data}', {preco}, {qtde})"""
+            ({self.id}, '{self.cliente}', '{self.produto}', '{self.data}', {self.preco}, {self.qtde})"""
 
         # ====>>>> Inserir item a item
         # comando = f"""INSERT INTO Vendas(id_venda, cliente, produto, data_venda, preco, quantidade)
@@ -117,16 +119,13 @@ class Compra:
         print(self.historico)
 
 
-# Menu
-# programa principal
-
 def criar_compra():
-    # 3 -Fazer um 'for' e gravar no BD
-    incluir = []
-    incluir2 = []
+
+    import pyodbc
 
     # Contruir Tela
     print('-=' * 25, '\n')
+    incluir = []
     id = input("[ID:] ")
     cliente = input("[Cliente]: ")
     produto = input("[Produto]: ")
@@ -135,7 +134,31 @@ def criar_compra():
     qtde = input("[Quantidade]: ")
     compra = Compra(id, cliente, produto, data, preco, qtde)
     incluir.append([{id}, {cliente}, {produto}, {data}, {preco}, {qtde}])
-    # self.historico.append(-- Chamar super Classe ---incluir)
+
+    # Gravando....
+    # gravando no SQL_Server - Local
+    # dados_conexao = (
+    #     "Driver={SQL Server};"
+    #     "Server=ANAKIN;"
+    #     "Database=PythonSQL;"
+    # )
+
+    # conexao = pyodbc.connect(dados_conexao)
+    # print("Conexão Bem Sucedida")
+    # cursor = conexao.cursor()
+
+    # comando = f"""INSERT INTO Vendas(id_venda, cliente, produto, data_venda, preco, quantidade)
+    #     VALUES
+    #         ({id}, '{cliente}', '{produto}', '{data}', {preco}, {qtde})"""
+
+    # cursor.execute(comando)
+    # cursor.commit()
+
+    compra.gravar_sql_Server(compra.id, compra.cliente,
+                             compra.produto, compra.data, compra.preco, compra.qtde)
+    compra.historico.append(incluir)
+
+    # historico.append(incluir)
     print('-=' * 25, '\n')
     print("\n----- print incluir-------------\n")
     print(incluir)
@@ -146,15 +169,31 @@ def criar_compra():
     print("Cadastro ok")
 
     print("\n-----print classe compra ------------\n")
-    print("ID: ", compra.id)
+    print("ID:      ", compra.id)
     print("Cliente: ", compra.cliente)
     print("Produto: ", compra.produto)
-    print("Data: ", compra.data)
-    print("Qtde: ", compra.qtde)
-    
-    
+    print("Data :   ", compra.data)
+    print("Qtde :   ", compra.qtde)
+    # acrescentar no log
+    arquivo.write("ID:      ")
+    arquivo.write(compra.id)
+    arquivo.write('  ' + "\n")
+    arquivo.write("Cliente: ")
+    arquivo.write(compra.cliente)
+    arquivo.write('  ' + "\n")
+    arquivo.write("Produto: ")
+    arquivo.write(compra.produto)
+    arquivo.write('  ' + "\n")
+    arquivo.write("Data :   ")
+    arquivo.write(compra.data)
+    arquivo.write('  ' + "\n")
+    arquivo.write("Qtde :   ")
+    arquivo.write(compra.qtde)
+    arquivo.write('  ' + "\n")
 
 
+# Menu
+# programa principal
 arquivo = open(arq, "a", encoding="utf8")
 opcao = 0
 while opcao != 4:
