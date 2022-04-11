@@ -124,6 +124,7 @@ def criar_compra():
     import pyodbc
 
     # Contruir Tela
+    # Inserir um while para cadastrar
     print('-=' * 25, '\n')
     incluir = []
     id = input("[ID:] ")
@@ -164,9 +165,9 @@ def criar_compra():
     print(incluir)
 
     print("-=" * 15)
-    print('====== Histórico Compras Classe  ==========')
-    print('Compra: \n', compra.historico_compra())
-    print("Cadastro ok")
+    print('====== Histórico Compras Classe  ==========\n')
+    compra.historico_compra()
+    print("\nCadastro ok")
 
     print("\n-----print classe compra ------------\n")
     print("ID:      ", compra.id)
