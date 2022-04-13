@@ -117,6 +117,13 @@ class Compra:
 
     def historico_compra(self):
         print(self.historico)
+        #print("\n-----print historico_compra ------------\n")
+        # for hist in self.historico:
+        #     print("ID:      " + hist['id'])
+        #     print("Cliente: ", hist['cliente'])
+        #     print("Produto: ", hist['produto'])
+        #     print("Data :   ", hist['data'])
+        #     print("Qtde :   ", hist['qtde'])
 
 
 def criar_compra():
@@ -125,16 +132,54 @@ def criar_compra():
 
     # Contruir Tela
     # Inserir um while para cadastrar
-    print('-=' * 25, '\n')
-    incluir = []
-    id = input("[ID:] ")
-    cliente = input("[Cliente]: ")
-    produto = input("[Produto]: ")
-    data = input("[Data]: ")
-    preco = input("[Preço]: ")
-    qtde = input("[Quantidade]: ")
-    compra = Compra(id, cliente, produto, data, preco, qtde)
-    incluir.append([{id}, {cliente}, {produto}, {data}, {preco}, {qtde}])
+    opcao_cad = 's'
+    while opcao_cad == "S" or opcao_cad == "s":
+        if opcao_cad == 's' or opcao_cad == 'S':
+            print('-=' * 25, '\n')
+            incluir = []
+            lista = []
+            lista.append(incluir)
+            id = input("[ID:] ")
+            cliente = input("[Cliente]: ")
+            produto = input("[Produto]: ")
+            data = input("[Data]: ")
+            preco = input("[Preço]: ")
+            qtde = input("[Quantidade]: ")
+            compra = Compra(id, cliente, produto, data, preco, qtde)
+            incluir.append(
+                [{id}, {cliente}, {produto}, {data}, {preco}, {qtde}])
+            # Gravando no Banco de Dados
+            print('Aguarde gravando...')
+            compra.gravar_sql_Server(compra.id, compra.cliente,
+                                     compra.produto, compra.data, compra.preco, compra.qtde)
+            # compra.historico.append(incluir)
+            compra.historico.append(lista)
+
+            # acrescentar no log
+            arquivo.write("ID:      ")
+            arquivo.write(compra.id)
+            arquivo.write('  ' + "\n")
+            arquivo.write("Cliente: ")
+            arquivo.write(compra.cliente)
+            arquivo.write('  ' + "\n")
+            arquivo.write("Produto: ")
+            arquivo.write(compra.produto)
+            arquivo.write('  ' + "\n")
+            arquivo.write("Data :   ")
+            arquivo.write(compra.data)
+            arquivo.write('  ' + "\n")
+            arquivo.write("Qtde :   ")
+            arquivo.write(compra.qtde)
+            arquivo.write('\n')
+            arquivo.write("==" * 25)
+
+            opcao_cad = input('\n>>>>>>>>>> Quer fazer outro cadastro? [S/N] ')
+        elif opcao_cad == 'N' or opcao_cad == 'n':
+            break
+        else:
+            print('Opção inválida. Tente novamente!')
+            print('=-=' * 15)
+    print('Fim do programa!')
 
     # Gravando....
     # gravando no SQL_Server - Local
@@ -155,49 +200,33 @@ def criar_compra():
     # cursor.execute(comando)
     # cursor.commit()
 
-    compra.gravar_sql_Server(compra.id, compra.cliente,
-                             compra.produto, compra.data, compra.preco, compra.qtde)
-    compra.historico.append(incluir)
-
     # historico.append(incluir)
     print('-=' * 25, '\n')
-    print("\n----- print incluir-------------\n")
-    print(incluir)
+    print("\n----- print lista -------------\n")
+    print(lista)
 
     print("-=" * 15)
     print('====== Histórico Compras Classe  ==========\n')
     compra.historico_compra()
     print("\nCadastro ok")
+    print("\n")
 
-    print("\n-----print classe compra ------------\n")
+    print("\n-----print Classe compra ------------\n")
     print("ID:      ", compra.id)
     print("Cliente: ", compra.cliente)
     print("Produto: ", compra.produto)
     print("Data :   ", compra.data)
     print("Qtde :   ", compra.qtde)
-    # acrescentar no log
-    arquivo.write("ID:      ")
-    arquivo.write(compra.id)
-    arquivo.write('  ' + "\n")
-    arquivo.write("Cliente: ")
-    arquivo.write(compra.cliente)
-    arquivo.write('  ' + "\n")
-    arquivo.write("Produto: ")
-    arquivo.write(compra.produto)
-    arquivo.write('  ' + "\n")
-    arquivo.write("Data :   ")
-    arquivo.write(compra.data)
-    arquivo.write('  ' + "\n")
-    arquivo.write("Qtde :   ")
-    arquivo.write(compra.qtde)
-    arquivo.write('  ' + "\n")
+    print("\n")
+    print("-=" * 15)
+    print("\n")
 
 
 # Menu
 # programa principal
 arquivo = open(arq, "a", encoding="utf8")
 opcao = 0
-while opcao != 4:
+while opcao != 5:
     print('''
           [ 1 ] Cadastrar Compra
           [ 2 ] Atualizar Compra
@@ -205,14 +234,6 @@ while opcao != 4:
           [ 4 ] Listar Compra do Dia
           [ 5 ] Sair do programa
           ''')
-    arquivo.write('''
-          [ 1 ] Cadastrar Compra
-          [ 2 ] Atualizar Compra
-          [ 3 ] Deletar Compra
-          [ 4 ] Listar Compra do Dia
-          [ 5 ] Sair do programa
-          ''')
-    arquivo.write('  ' + "\n")
     arquivo.write('  ' + "\n")
     opcao = int(input('>>>>>>>>>> Qual é a sua opção?  '))
     if opcao == 1:
@@ -233,7 +254,7 @@ while opcao != 4:
         deletar_compra()
     elif opcao == 4:
         print('\nopção 4 - Listar Compras do Dia\n')
-        arquivo.write('>>>>>>>>>> opção 5 - Sair do Programa' + '\n')
+        arquivo.write('>>>>>>>>>> opção 4 - Sair do Programa' + '\n')
         arquivo.write('  ' + "\n")
     elif opcao == 5:
         print('\nopção 5 - Sair do Programa\n')
@@ -254,7 +275,6 @@ else:
 
 
 arquivo.close()
-
 
 # criando as opções
 # insert_bd = {}
