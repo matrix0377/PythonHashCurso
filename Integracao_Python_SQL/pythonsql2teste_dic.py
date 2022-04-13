@@ -116,7 +116,10 @@ class Compra:
         pass
 
     def historico_compra(self):
-        print(self.historico)
+        print('====== Histórico_Compras Classe  ==========\n')
+        for c in enumerate(self.historico):
+            print(f"{c}:\n")            
+        # listar uma linha por vez...<<<<-----       
         #print("\n-----print historico_compra ------------\n")
         # for hist in self.historico:
         #     print("ID:      " + hist['id'])
@@ -132,29 +135,31 @@ def criar_compra():
 
     # Contruir Tela
     # Inserir um while para cadastrar
+    lista = []
     opcao_cad = 's'
     while opcao_cad == "S" or opcao_cad == "s":
         if opcao_cad == 's' or opcao_cad == 'S':
             print('-=' * 25, '\n')
             incluir = []
-            lista = []
-            lista.append(incluir)
+            # incluir registros        
             id = input("[ID:] ")
             cliente = input("[Cliente]: ")
             produto = input("[Produto]: ")
-            data = input("[Data]: ")
+            data = (datetime.datetime.now().strftime('%d-%m-%Y'))
             preco = input("[Preço]: ")
             qtde = input("[Quantidade]: ")
             compra = Compra(id, cliente, produto, data, preco, qtde)
             incluir.append(
                 [{id}, {cliente}, {produto}, {data}, {preco}, {qtde}])
+            lista.append(incluir)
+            
             # Gravando no Banco de Dados
             print('Aguarde gravando...')
             compra.gravar_sql_Server(compra.id, compra.cliente,
                                      compra.produto, compra.data, compra.preco, compra.qtde)
             # compra.historico.append(incluir)
             compra.historico.append(lista)
-
+            
             # acrescentar no log
             arquivo.write("ID:      ")
             arquivo.write(compra.id)
@@ -202,7 +207,7 @@ def criar_compra():
 
     # historico.append(incluir)
     print('-=' * 25, '\n')
-    print("\n----- print lista -------------\n")
+    print("\n----- print lista total -------------\n")
     print(lista)
 
     print("-=" * 15)
@@ -217,7 +222,6 @@ def criar_compra():
     print("Produto: ", compra.produto)
     print("Data :   ", compra.data)
     print("Qtde :   ", compra.qtde)
-    print("\n")
     print("-=" * 15)
     print("\n")
 
