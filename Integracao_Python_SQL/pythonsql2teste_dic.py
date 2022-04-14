@@ -50,7 +50,7 @@ class Compra:
         self.data = data
         self.preco = preco
         self.qtde = qtde
-        self.historico = []
+        self.historico = {}
         self.incluir = []
 
     def gravar_sql_Server(self, id, cliente, produto, data, preco, qtde):
@@ -116,17 +116,21 @@ class Compra:
         pass
 
     def historico_compra(self):
+        self.historico = dict_from_lista
         print('====== Histórico_Compras Classe  ==========\n')
-        for c in enumerate(self.historico):
-            print(f"{c}:\n")            
-        # listar uma linha por vez...<<<<-----       
-        #print("\n-----print historico_compra ------------\n")
-        # for hist in self.historico:
-        #     print("ID:      " + hist['id'])
-        #     print("Cliente: ", hist['cliente'])
-        #     print("Produto: ", hist['produto'])
-        #     print("Data :   ", hist['data'])
-        #     print("Qtde :   ", hist['qtde'])
+        for k, v in enumerate(self.historico):
+            print(f"{k}: {v} \n")
+        # listar uma linha por vez...<<<<-----
+        # print("\n-----print historico_compra ------------\n")
+        print('-------- For historico ---------')
+        print(dict_from_lista)
+        # for k, v in range(len(key_list)):
+        #     print('*****************************')
+        #     print("{k} : {v}")
+        # print('\n')
+        print('\n')
+        
+        
 
 
 def criar_compra():
@@ -135,31 +139,37 @@ def criar_compra():
 
     # Contruir Tela
     # Inserir um while para cadastrar
-    lista = []
-    opcao_cad = 's'
+    lista_reg=[]
+    global key_list
+    global dict_from_lista
+    opcao_cad='s'
     while opcao_cad == "S" or opcao_cad == "s":
         if opcao_cad == 's' or opcao_cad == 'S':
             print('-=' * 25, '\n')
-            incluir = []
-            # incluir registros        
-            id = input("[ID:] ")
-            cliente = input("[Cliente]: ")
-            produto = input("[Produto]: ")
-            data = (datetime.datetime.now().strftime('%d-%m-%Y'))
-            preco = input("[Preço]: ")
-            qtde = input("[Quantidade]: ")
-            compra = Compra(id, cliente, produto, data, preco, qtde)
+            incluir=[]
+            # incluir registros
+            id=input("[ID:] ")
+            cliente=input("[Cliente]: ")
+            produto=input("[Produto]: ")
+            data=(datetime.datetime.now().strftime('%d-%m-%Y'))
+            preco=input("[Preço]: ")
+            qtde=input("[Quantidade]: ")
+            compra=Compra(id, cliente, produto, data, preco, qtde)
             incluir.append(
                 [{id}, {cliente}, {produto}, {data}, {preco}, {qtde}])
-            lista.append(incluir)
-            
+            lista_reg.append(incluir)
+            key_list = ['id', 'cliente', 'produto', 'data', 'preco', 'qtde']
+            dict_from_lista = dict(zip(key_list, lista_reg))
+            print('---print dict_from_lista ------------')
+            print(dict_from_lista)
+            lista_reg = list(dict_from_lista)
             # Gravando no Banco de Dados
             print('Aguarde gravando...')
             compra.gravar_sql_Server(compra.id, compra.cliente,
                                      compra.produto, compra.data, compra.preco, compra.qtde)
             # compra.historico.append(incluir)
-            compra.historico.append(lista)
-            
+            #compra.historico.append(lista_reg)
+
             # acrescentar no log
             arquivo.write("ID:      ")
             arquivo.write(compra.id)
@@ -177,8 +187,9 @@ def criar_compra():
             arquivo.write(compra.qtde)
             arquivo.write('\n')
             arquivo.write("==" * 25)
+            arquivo.write('\n')
 
-            opcao_cad = input('\n>>>>>>>>>> Quer fazer outro cadastro? [S/N] ')
+            opcao_cad=input('\n>>>>>>>>>> Quer fazer outro cadastro? [S/N] ')
         elif opcao_cad == 'N' or opcao_cad == 'n':
             break
         else:
@@ -207,14 +218,15 @@ def criar_compra():
 
     # historico.append(incluir)
     print('-=' * 25, '\n')
-    print("\n----- print lista total -------------\n")
-    print(lista)
+    print("\n----- print lista_reg total -------------\n")
+    print(lista_reg)
 
     print("-=" * 15)
     print('====== Histórico Compras Classe  ==========\n')
     compra.historico_compra()
     print("\nCadastro ok")
     print("\n")
+
 
     print("\n-----print Classe compra ------------\n")
     print("ID:      ", compra.id)
@@ -224,12 +236,13 @@ def criar_compra():
     print("Qtde :   ", compra.qtde)
     print("-=" * 15)
     print("\n")
+    
 
 
 # Menu
 # programa principal
-arquivo = open(arq, "a", encoding="utf8")
-opcao = 0
+arquivo=open(arq, "a", encoding="utf8")
+opcao=0
 while opcao != 5:
     print('''
           [ 1 ] Cadastrar Compra
@@ -239,7 +252,7 @@ while opcao != 5:
           [ 5 ] Sair do programa
           ''')
     arquivo.write('  ' + "\n")
-    opcao = int(input('>>>>>>>>>> Qual é a sua opção?  '))
+    opcao=int(input('>>>>>>>>>> Qual é a sua opção?  '))
     if opcao == 1:
         print('\nopção 1 - Cadastrar Compra\n')
         arquivo.write('>>>>>>>>>> opção 1 - Cadastrar Compra' + '\n')
@@ -287,3 +300,4 @@ arquivo.close()
 
 
 # status do teste - Funcionou OK
+
