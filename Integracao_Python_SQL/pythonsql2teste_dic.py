@@ -50,7 +50,7 @@ class Compra:
         self.data = data
         self.preco = preco
         self.qtde = qtde
-        self.historico = {}
+        self.historico = []
         self.incluir = []
 
     def gravar_sql_Server(self, id, cliente, produto, data, preco, qtde):
@@ -116,19 +116,23 @@ class Compra:
         pass
 
     def historico_compra(self):
-        self.historico = dict_from_lista
         print('====== Histórico_Compras Classe  ==========\n')
-        for k, v in enumerate(self.historico):
-            print(f"{k}: {v} \n")
+        # for k, v in enumerate(self.historico):
+        #     print(f"{k}: {v} \n")
         # listar uma linha por vez...<<<<-----
         # print("\n-----print historico_compra ------------\n")
-        print('-------- For historico ---------')
-        print(dict_from_lista)
+        
         # for k, v in range(len(key_list)):
         #     print('*****************************')
         #     print("{k} : {v}")
         # print('\n')
         print('\n')
+        mytuple = tuple(self.historico)
+        for i in self.historico:
+            print(i)
+            
+            
+        print("\nNúmero de elementos: ", len(mytuple))
         
         
 
@@ -140,8 +144,8 @@ def criar_compra():
     # Contruir Tela
     # Inserir um while para cadastrar
     lista_reg=[]
+    lista1 = []
     global key_list
-    global dict_from_lista
     opcao_cad='s'
     while opcao_cad == "S" or opcao_cad == "s":
         if opcao_cad == 's' or opcao_cad == 'S':
@@ -159,17 +163,16 @@ def criar_compra():
                 [{id}, {cliente}, {produto}, {data}, {preco}, {qtde}])
             lista_reg.append(incluir)
             key_list = ['id', 'cliente', 'produto', 'data', 'preco', 'qtde']
-            dict_from_lista = dict(zip(key_list, lista_reg))
-            print('---print dict_from_lista ------------')
-            print(dict_from_lista)
-            lista_reg = list(dict_from_lista)
+            tupla1 = (id, cliente, produto, data, preco, qtde)
+            lista1.append(tupla1)
+                       
             # Gravando no Banco de Dados
             print('Aguarde gravando...')
             compra.gravar_sql_Server(compra.id, compra.cliente,
                                      compra.produto, compra.data, compra.preco, compra.qtde)
-            # compra.historico.append(incluir)
-            #compra.historico.append(lista_reg)
-
+            # incluir compra no historico da classe
+            compra.historico.append(lista_reg)
+            
             # acrescentar no log
             arquivo.write("ID:      ")
             arquivo.write(compra.id)
@@ -196,6 +199,8 @@ def criar_compra():
             print('Opção inválida. Tente novamente!')
             print('=-=' * 15)
     print('Fim do programa!')
+    print('---print lista1 - criar_compra ---------')
+    print(lista1)
 
     # Gravando....
     # gravando no SQL_Server - Local
@@ -204,7 +209,6 @@ def criar_compra():
     #     "Server=ANAKIN;"
     #     "Database=PythonSQL;"
     # )
-
     # conexao = pyodbc.connect(dados_conexao)
     # print("Conexão Bem Sucedida")
     # cursor = conexao.cursor()
@@ -212,10 +216,8 @@ def criar_compra():
     # comando = f"""INSERT INTO Vendas(id_venda, cliente, produto, data_venda, preco, quantidade)
     #     VALUES
     #         ({id}, '{cliente}', '{produto}', '{data}', {preco}, {qtde})"""
-
     # cursor.execute(comando)
     # cursor.commit()
-
     # historico.append(incluir)
     print('-=' * 25, '\n')
     print("\n----- print lista_reg total -------------\n")
@@ -236,6 +238,8 @@ def criar_compra():
     print("Qtde :   ", compra.qtde)
     print("-=" * 15)
     print("\n")
+    # print for list comprehension
+    #  print('---print dict_from_lista - criar_compra ---------')
     
 
 
